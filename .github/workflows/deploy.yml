@@ -34,5 +34,5 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          port: ${{ secrets.PORT }}
-          script: whoami
+          port: ${{ secrets.SERVER_PORT }}
+          script: echo "hello" >> test.txt
