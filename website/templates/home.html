@@ -1,29 +1,110 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Таблица</h1>
-{% if players %}
-<table class="table table-striped table-hover table-sm">
-    <thead class="table-dark"></thead>
-        <tr>
-            <th scope="col">Ранг</th>
-            <th scope="col">Имя</th>
-            <th scope="col">Рейтинг</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for player in players%}
-        <tr>
-        <th scope="row"><a href="#">{{ player.0 }}</a></th>
-            <td>{{ player.1 }}</td>
-            <td>{{ player.2 }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+<section id="player-section">
+    <div class="text-container">
+        <h2>Рейтинг Игроков</h2>
+    </div>
 
-{% else %}
-<p>Данные отсутсвуют.</p>
+    {% if players %}
+    <table class="table-players">
+        <colgroup>
+            <col class="col-rank">
+            <col class="col-player">
+            <col class="col-rating">
+        </colgroup>
+        <thead>
+            <tr>
+                <th class="t-rank">Ранг</th>
+                <th class="t-player">Имя</th>
+                <th class="t-rating">Рейтинг</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in players %}
+            <tr>
+                <td class="t-rank">{{ player.rank }}</td>
+                <td class="t-player">{{ player.first_name }}</td>
+                <td class="t-rating">{{ player.curr_rating|floatformat:0 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Данные отсутсвуют.</p>
+    {% endif %}
+</section>
+
+{% if user.is_authenticated %}
+<section>
+    <div class="text-container">
+        <h2>Панель Управления</h2>
+    </div>
+    <div class="control-panel">
+        <div class="cp-left">
+            <form method="POST" action="{% url 'add_player' %}">
+                <h3>Новый Игрок</h3>
+                {% csrf_token %}
+                {{ add_player_form.first_name }}
+                {{ add_player_form.last_name }}
+                <button type="submit" class="cta-button">Добавить</button>
+            </form>
+        </div>
+        <div class="cp-right">
+            <form method="POST" action="{% url 'add_match' %}">
+                <h3>Новый Матч</h3>
+                {% csrf_token %}
+                <div>
+                {{ add_match_form.player_one }}
+                {{ add_match_form.score_one }}
+                </div>
+                <div>
+                {{ add_match_form.player_two }}
+                {{ add_match_form.score_two }}
+                </div>
+                  <button type="submit" class="cta-button">Добавить</button>
+            </form>
+        </div>
+    </div>
+</section>
 {% endif %}
 
+
+
+<section id="match-section">
+    <div class="text-container">
+        <h2>История Матчей</h2>
+    </div>
+
+    {% if matches %}
+    <table class="table-matches">
+        <colgroup>
+            <col class="col-date">
+            <col class="col-player1">
+            <col class="col-result">
+            <col class="col-player2">
+        </colgroup>
+        <thead>
+            <tr>
+                <th class="t-date">Дата</th>
+                <th class="t-player1"></th>
+                <th class="t-result">Результат</th>
+                <th class="t-player2"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for match in matches %}
+            <tr>
+                <td class="t-date">{{ match.created_at|date:"d.m.Y"}}</td>
+                <td class="t-player1">{{ match.player_one.first_name}}</td>
+                <td class="t-result">{{ match.score_one }}:{{ match.score_two }}</td>
+                <td class="t-player2">{{ match.player_two.first_name}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Данные отсутсвуют.</p>
+    {% endif %}
+</section>
 {% endblock %}

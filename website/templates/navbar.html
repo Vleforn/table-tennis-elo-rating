@@ -1,21 +1,27 @@
-<nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary, rounded" data-bs-theme="dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Эло Рейтинг по Настольному Теннису</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Таблица</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">История Матчей</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Войти</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+{% load static %}
+
+<header>
+   <div class="left">
+        <img src="{% static 'logo.svg' %}">
+        <h2>РЕЙТИНГ ЭЛО</h2>
+   </div> 
+   <div class="right">
+        <ul>
+            <li><a href="{% url 'home' %}#player-section">Рейтинг</a></li>
+            <li><a href="{% url 'home' %}#match-section">История матчей</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'home' %}#match-section">Настройки</a></li>
+            {% endif %}
+        </ul>
+        {% if user.is_authenticated %}
+        <a href="{% url 'logout_user' %}" class="cta-button">Выйти</a>
+        {% else %}
+        <a href="{% url 'login_page' %}" class="cta-button">Войти</a>
+        {% endif %}
+   </div>
+    <a class="burger" href="#">
+        <span></span>
+        <span></span>
+        <span></span>
+    </a>
+</header>

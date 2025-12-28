@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="login">
+    <div class="login-inside">
+        <h3>Панель Админа</h3>
+        <form method="POST" action="{% url 'login_page' %}">
+            {% csrf_token %}
+            <input type="text" class="form-control" name="username" placeholder="Пользователь" required>
+            <input type="password" class="form-control" name="password" placeholder="Пороль" required>
+            <button type="submit" class="cta-button">Войти</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

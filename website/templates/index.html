@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+       <div class="left">
+            <img src="images/logo.svg">
+            <h2>РЕЙТИНГ ЭЛО</h2>
+       </div> 
+       <div class="right">
+            <ul>
+                <li><a href="index.html">Рейтинг</a></li>
+                <li><a href="index.html">История матчей</a></li>
+            </ul>
+            <a href="index.html" class="cta-button">Войти</a>
+       </div>
+        <a class="burger" href="#">
+            <span></span>
+            <span></span>
+            <span></span>
+        </a>
+    </header>
+
+    <section>
+        <div class="text-container">
+            <h2>Рейтинг Игроков</h2>
+        </div>
+        <table class="table-players">
+            <colgroup>
+                <col class="col-rank">
+                <col class="col-player">
+                <col class="col-rating">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th class="t-rank">Ранг</th>
+                    <th class="t-player">Имя</th>
+                    <th class="t-rating">Рейтинг</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="t-rank">1</td>
+                    <td class="t-player">Алмасбек Утегенов</td>
+                    <td class="t-rating">1500</td>
+                </tr>
+                <tr>
+                    <td class="t-rank">1</td>
+                    <td class="t-player">Алмасбек Утегенов</td>
+                    <td class="t-rating">1500</td>
+                </tr>
+                <tr>
+                    <td class="t-rank">1</td>
+                    <td class="t-player">Алмасбек Утегенов</td>
+                    <td class="t-rating">1500</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+
+    <section>
+        <div class="text-container">
+            <h2>История Матчей</h2>
+        </div>
+        <table class="table-matches">
+            <colgroup>
+                <col class="col-date">
+                <col class="col-player1">
+                <col class="col-result">
+                <col class="col-player2">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th class="t-date">Дата</th>
+                    <th class="t-player1"></th>
+                    <th class="t-result">Результат</th>
+                    <th class="t-player2"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="t-date">08.12.25</td>
+                    <td class="t-player1">Алмасбек Утегенов</td>
+                    <td class="t-result">3:2</td>
+                    <td class="t-player2">Касымхан Байсеитов</td>
+                </tr>
+                <tr>
+                    <td class="t-date">08.12.25</td>
+                    <td class="t-player1">Алмасбек Утегенов</td>
+                    <td class="t-result">3:2</td>
+                    <td class="t-player2">Касымхан Байсеитов</td>
+                </tr>
+                <tr>
+                    <td class="t-date">08.12.25</td>
+                    <td class="t-player1">Алмасбек Утегенов</td>
+                    <td class="t-result">3:2</td>
+                    <td class="t-player2">Касымхан Байсеитов</td>
+                </tr>
+                <tr>
+                    <td class="t-date">08.12.25</td>
+                    <td class="t-player1">Алмасбек Утегенов</td>
+                    <td class="t-result">3:2</td>
+                    <td class="t-player2">Касымхан Байсеитов</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <script>
+        // Wait until the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            const burger = document.querySelector('.burger');
+            const menu = document.querySelector('.right');
+
+            burger.addEventListener('click', () => {
+                menu.classList.toggle('active'); // slide in/out
+            });
+        });
+    </script>
+</body>
+</html>

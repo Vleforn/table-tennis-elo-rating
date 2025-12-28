@@ -1,0 +1,48 @@
+@media (max-width: 729px) {
+    .table-matches thead {
+        display: none; /* hide header on mobile */
+    }
+
+    .table-matches tbody,
+    .table-matches tr,
+    .table-matches td {
+        display: block;
+        width: 100%;
+    }
+
+    .table-matches tr {
+        margin-bottom: 1em;
+        border: 0.1em solid var(--border);
+        border-radius: 1em;
+        background-color: var(--bg-light);
+        padding: 0.5em;
+    }
+
+    /* DATE ON TOP */
+    .table-matches td.t-date {
+        font-weight: bold;
+        margin-bottom: 0.3em;
+        text-align: left;
+    }
+
+    /* other cells */
+    .table-matches td:not(.t-date) {
+        display: inline-block;
+        width: auto;
+        white-space: nowrap;
+    }
+
+    /* layout for players + result */
+    .table-matches td.t-player1 {
+        text-align: right;
+    }
+
+    .table-matches td.t-result {
+        text-align: center;
+        margin: 0 0.5em;
+    }
+
+    .table-matches td.t-player2 {
+        text-align: left;
+    }
+}
