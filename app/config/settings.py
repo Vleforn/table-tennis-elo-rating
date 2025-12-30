@@ -29,9 +29,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DEBUG', False))
 
-# ???
-ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['http://localhost:8050']
+ALLOWED_HOSTS = ['tabletennis.vleforn.com', 'www.tabletennis.vleforn.com']
+CSRF_TRUSTED_ORIGINS = ['https://tabletennis.vleforn.com', 'https://www.tabletennis.vleforn.com']
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 # Application definition
 
