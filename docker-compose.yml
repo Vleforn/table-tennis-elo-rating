@@ -17,7 +17,7 @@ services:
       - "443:443"
     volumes:
       - static_volume:/staticfiles
-      - /etc/letsencrypt/live/tabletennis.vleforn.com:/etc/letsencrypt/live/tabletennis.vleforn.com
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - django
 
