@@ -17,16 +17,9 @@ services:
       - "443:443"
     volumes:
       - static_volume:/staticfiles
-      - ./certbot/certs:/certs
+      - /etc/letsencrypt/live/tabletennis.vleforn.com:/etc/letsencrypt/live/tabletennis.vleforn.com
     depends_on:
       - django
-
-  certbot:
-    image: certbot/certbot:v5.2.2
-    container_name: certbot
-    volumes:
-      - ./cerbot/certs:/etc/letsencrypt
-      - ./cerbot/certs:/var/lib/letsencrypt
 
 volumes:
   static_volume:
