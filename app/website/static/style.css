@@ -192,10 +192,13 @@ section {
 }
 
 .cp-right form div {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 }
 
 .match-player {
-    width: 250px;
+    width: 220px;
     height: 2rem;
     text-align: center;
     background-color: var(--bg-light);
@@ -208,7 +211,7 @@ section {
 }
 
 .match-score {
-    width: 50px;
+    width: 60px;
     height: 2rem;
     text-align: center;
     background-color: var(--bg-light);
@@ -259,7 +262,7 @@ section {
     overflow: hidden;
 }
 
-.table-players th, td {
+.table-players td {
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -402,6 +405,18 @@ section {
     transform: translateX(0);     /* slide in */
 }
 
+.sidebar ul {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    gap: 2em;
+    align-items: center;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: var(--text-muted);
+}
 
 .main-content {
     z-index: 0;
@@ -436,10 +451,12 @@ section {
         flex-direction: column;
     }
     header .burger {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        /* display: flex; */
+        /* flex-direction: column; */
+        /* align-items: center; */
+        /* justify-content: center; */
+        display: block;
+        position: relative;
         width: 3rem;
         height: 3rem;
         background-color: var(--bg);
@@ -449,12 +466,41 @@ section {
         border-style: solid;
     }
     header .burger span {
+        position: absolute;
+        left: 0.7rem;
         display: block;
         width: 1.5rem;
         height: 0.2rem;
-        margin: 0.15rem 0;
         background-color: aliceblue;
         border-radius: 0.1rem;
+        transition: .25s ease-in-out;
+    }
+
+    header .burger span:nth-child(1) {
+        top: 0.8rem;
+    }
+
+    header .burger span:nth-child(2) {
+        top: 1.3rem;
+    }
+
+    header .burger span:nth-child(3) {
+        top: 1.8rem;
+    }
+    
+    header .burger.open span:nth-child(1) {
+        top: 1.3rem;
+        transform: rotate(45deg);
+    }
+
+    header .burger.open span:nth-child(2) {
+        width: 0%;
+        opacity: 0%;
+    }
+
+    header .burger.open span:nth-child(3) {
+        top: 1.3rem;
+        transform: rotate(-45deg);
     }
 }
 
