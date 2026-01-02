@@ -1,16 +1,18 @@
 {% load static %}
 
 <header>
-   <div class="left">
-        <img src="{% static 'logo.svg' %}">
-        <h2>РЕЙТИНГ ЭЛО</h2>
-   </div> 
-   <div class="right">
+    <a href="{% url 'home' %}">
+        <div class="left">
+            <img src="{% static 'logo.svg' %}">
+            <h2>РЕЙТИНГ ЭЛО</h2>
+        </div> 
+    </a>
+    <div class="right">
         <ul>
             <li><a href="{% url 'home' %}#player-section">Рейтинг</a></li>
             <li><a href="{% url 'home' %}#match-section">История матчей</a></li>
             {% if user.is_authenticated %}
-            <li><a href="{% url 'home' %}#match-section">Настройки</a></li>
+            <li><a href="{% url 'control_center' %}">Настройки</a></li>
             {% endif %}
         </ul>
         {% if user.is_authenticated %}
@@ -18,7 +20,7 @@
         {% else %}
         <a href="{% url 'login_page' %}" class="cta-button">Войти</a>
         {% endif %}
-   </div>
+    </div>
     <a class="burger" href="#">
         <span></span>
         <span></span>

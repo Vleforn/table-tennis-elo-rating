@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Player, Match
+from .models import Player, Match, EloParameter
 
 class LoginForm(forms.ModelForm):
     first_name = forms.CharField(required=True, label="", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Имя'}))
@@ -26,4 +26,12 @@ class AddMatchForm(forms.ModelForm):
 
     class Meta:
         model = Match
+        fields = '__all__'
+
+class EloParameterForm(forms.ModelForm):
+    k_index = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    start_elo = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = EloParameter
         fields = '__all__'
