@@ -19,8 +19,10 @@ RUN pip install --no-cache-dir -r requirements.txt
  
 COPY . .
 
-# Collect Static files (temporary)
-RUN python manage.py collectstatic --noinput
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
 
 # Start the application using Gunicorn
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "config.wsgi:application"]
