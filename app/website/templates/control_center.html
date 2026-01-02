@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+    <div class="text-container">
+        <h2>Базовые параметры</h2>
+    </div>
+    <div class="control-panel">
+        <div class="cp-left">
+            {% if elo_parameter_form %}
+            <form method="POST" action="{% url 'control_center' %}">
+                {% csrf_token %}
+                <div class="base-settings">
+                    <label for="id_start_elo">Стартовый Рейтинг:</label>
+                    {{ elo_parameter_form.start_elo }}
+                </div>
+                <div class="base-settings">
+                    <label for="id_k_index">K-индекс:</label>
+                    {{ elo_parameter_form.k_index }}
+                </div>
+                <button type="submit" class="cta-button">Изменить</button>
+                <p><em>Изменение приведет к перерасчету рейтинга всех игроков!</em></p>
+            </form>
+            {% else %}
+            <p>Параметры не настроены</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

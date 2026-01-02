@@ -61,6 +61,9 @@ header .left img {
     width: 3rem;
     border-radius: 1em;
 }
+header a {
+    text-decoration: none;
+}
 
 header .right {
     display: flex;
@@ -165,6 +168,28 @@ section {
 .add-player-input {
     display: block;
     width: 300px;
+    height: 2rem;
+    text-align: center;
+    background-color: var(--bg-light);
+    border-radius: 1rem;
+    border-color: var(--border);
+    border-width: 0.1em;
+    border-style: solid;
+    color: var(--text);
+    font-size: 1rem;
+}
+
+.base-settings {
+    display: flex;
+    flex-direction: row;
+    width: 300px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.base-settings input {
+    display: block;
+    width: 4rem;
     height: 2rem;
     text-align: center;
     background-color: var(--bg-light);

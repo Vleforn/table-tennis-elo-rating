@@ -19,7 +19,7 @@
             <li><a href="{% url 'home' %}#player-section">Рейтинг</a></li>
             <li><a href="{% url 'home' %}#match-section">История матчей</a></li>
             {% if user.is_authenticated %}
-            <li><a href="{% url 'home' %}#match-section">Настройки</a></li>
+            <li><a href="{% url 'control_center' %}">Настройки</a></li>
             {% endif %}
         </ul>
         {% if user.is_authenticated %}
@@ -35,14 +35,15 @@
     <script>
         // Wait until the DOM is fully loaded
         document.addEventListener('DOMContentLoaded', () => {
+            // Sidebar control
             const burger = document.querySelector('.burger');
             const sidebar = document.querySelector('.sidebar')
             const overlay = document.querySelector('.overlay')
 
             burger.addEventListener('click', () => {
                 burger.classList.toggle('open');
-                overlay.classList.toggle('active'); // slide in/out
-                sidebar.classList.toggle('active'); // slide in/out
+                overlay.classList.toggle('active');
+                sidebar.classList.toggle('active');
                 if (document.body.style.overflow === 'hidden') {
                     document.body.style.overflow = '';
                 } else {
@@ -50,19 +51,19 @@
                 }
             });
             document.addEventListener('click', (e) => {
-                if (!sidebar.contains(e.target) && !burger.contains(e.target)) {
-                    burger.classList.toggle('open');
+                if (burger.classList.contains('open') && !sidebar.contains(e.target) && !burger.contains(e.target)) {
+                    burger.classList.remove('open');
                     sidebar.classList.remove('active');
-                    overlay.classList.remove('active'); // slide in/out
+                    overlay.classList.remove('active');
                     document.body.style.overflow = '';
                 }
             });
                 // Close when clicking a link or button inside menu
             sidebar.addEventListener('click', (e) => {
                 if (e.target.closest('a, button')) {
-                    burger.classList.toggle('open');
+                    burger.classList.remove('open');
                     sidebar.classList.remove('active');
-                    overlay.classList.remove('active'); // slide in/out
+                    overlay.classList.remove('active');
                     document.body.style.overflow = '';
                 }
             });

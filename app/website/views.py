@@ -1,9 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
 from .models import Player, Match, RatingRecords, EloParameter
-from django.db.models import OuterRef, Subquery, Window, F
+from django.db.models import Window, F
 from django.db.models.functions import Rank
-from .forms import AddPlayerForm, AddMatchForm
+from .forms import AddPlayerForm, AddMatchForm, EloParameterForm
 from django.contrib import messages
 from .elo_calc import update_rating
 from .queries import get_curr_rating
@@ -31,7 +31,15 @@ def logout_user(request):
 def control_center(request):
     if request.user.is_authenticated:
         parameters = EloParameter.objects.first()
-        return render(request, 'controlcenter.html', {'parameters': parameters})
+        if request.method == 'POST':
+            elo_parameter_form = EloParameterForm(request.POST, instance=parameters)
+            if elo_parameter_form.is_valid():
+                elo_parameter_form.save()
+                # recalculate all ratings
+            return redirect('control_center')
+        else:
+            elo_parameter_form = EloParameterForm(instance=parameters)
+            return render(request, 'control_center.html', {'elo_parameter_form': elo_parameter_form})
     else:
         messages.success(request, 'You must be logged in to see that page')
         return redirect('home')
