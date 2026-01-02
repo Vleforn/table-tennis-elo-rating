@@ -7,6 +7,7 @@ from .forms import AddPlayerForm, AddMatchForm, EloParameterForm
 from django.contrib import messages
 from .elo_calc import update_rating
 from .queries import get_curr_rating
+from django.core.paginator import Paginator
 
 def login_page(request):
     if request.method == 'POST':
@@ -53,8 +54,14 @@ def home(request):
             order_by=F('curr_rating').desc()
         )
     ).order_by('rank')
+    players_paginator = Paginator(players, 20)
+    players_page_number = request.GET.get('players_page', 1)
+    players_page_obj = players_paginator.get_page(players_page_number)
 
     matches = Match.objects.all().order_by('-created_at')
+    matches_paginator = Paginator(matches, 20)
+    matches_page_number = request.GET.get('matches_page', 1)
+    matches_page_obj = matches_paginator.get_page(matches_page_number)
 
     if request.user.is_authenticated:
         add_player_form = AddPlayerForm()
@@ -62,9 +69,9 @@ def home(request):
         return render(
             request,
             'home.html',
-            {'players': players, 'matches': matches, 'add_player_form': add_player_form, 'add_match_form': add_match_form})
+            {'players_page_obj': players_page_obj, 'matches_page_obj': matches_page_obj, 'add_player_form': add_player_form, 'add_match_form': add_match_form})
     else:
-        return render(request, 'home.html', {'players': players, 'matches': matches})
+        return render(request, 'home.html', {'players_page_obj': players_page_obj, 'matches_page_obj': matches_page_obj})
 
 def player(request):
     players = Player.objects.all()

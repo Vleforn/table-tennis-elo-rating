@@ -87,6 +87,31 @@ header .burger {
     display: none;
 }
 
+.messages {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    position: fixed;
+    margin: 0 auto;
+    top: 6rem;
+    left: 0;
+    right: 0;
+}
+
+.message {
+    display: none;
+    flex-direction: row;
+    padding: 1rem;
+    justify-content: space-between;
+    background-color: pink;
+    border: 0.1em solid var(--border);
+    border-radius: 1em;
+}
+
+.message p {
+    color: black;
+}
+
 section {
     scroll-margin-top: 5rem;
     margin: 0em auto;
@@ -554,4 +579,41 @@ section {
     .table-matches td:not(.t-date) {
         flex: 1 1 0;
     }
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
+.pagination .prev {
+    display: flex;
+    justify-content: right;
+    flex: 1;
+    gap: 1rem;
+}
+.pagination .current {
+    display: flex;
+    justify-content: center;
+    padding: 0 1rem;
+}
+
+.pagination .next {
+    display: flex;
+    justify-content: left;
+    flex: 1;
+    gap: 1rem;
+}
+
+.pagination .prev a,
+.pagination .next a {
+    color: var(--text-muted);
+    text-decoration: none;
+    background-color: var(--bg-light);
+    border-radius: 1rem;
+    border-color: var(--border);
+    border-width: 0.1em;
+    border-style: solid;
+    width: 2rem;
+    text-align: center;
 }

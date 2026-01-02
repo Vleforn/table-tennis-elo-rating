@@ -6,7 +6,7 @@
         <h2>Рейтинг Игроков</h2>
     </div>
 
-    {% if players %}
+    {% if players_page_obj %}
     <table class="table-players">
         <colgroup>
             <col class="col-rank">
@@ -21,7 +21,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for player in players %}
+            {% for player in players_page_obj %}
             <tr>
                 <td class="t-rank">{{ player.rank }}</td>
                 <td class="t-player">{{ player.first_name }} {{ player.last_name }}</td>
@@ -30,6 +30,24 @@
             {% endfor %}
         </tbody>
     </table>
+    <div class="pagination">
+            <span class="prev">
+                {% if players_page_obj.has_previous %}
+                    <a href="?players_page=1#player-section">◁</a>
+                    <a href="?players_page={{ players_page_obj.previous_page_number }}#player-section">◀</a>
+                {% endif %}
+            </span>
+            <span class="current">
+                Стр. {{ players_page_obj.number }} из {{ players_page_obj.paginator.num_pages }}
+            </span>
+            <span class="next">
+                {% if players_page_obj.has_next %}
+                    <a href="?players_page={{ players_page_obj.next_page_number }}#player-section">▶</a>
+                    <a href="?players_page={{ players_page_obj.paginator.num_pages }}#player-section">▷</a>
+            {% endif %}
+            </span>
+        <span>
+    </div>
     {% else %}
     <p>Данные отсутсвуют.</p>
     {% endif %}
@@ -76,7 +94,7 @@
         <h2>История Матчей</h2>
     </div>
 
-    {% if matches %}
+    {% if matches_page_obj %}
     <table class="table-matches">
         <colgroup>
             <col class="col-date">
@@ -93,7 +111,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for match in matches %}
+            {% for match in matches_page_obj %}
             <tr>
                 <td class="t-date">{{ match.created_at|date:"d.m.Y"}}</td>
                 <td class="t-player1">{{ match.player_one.first_name}}</td>
@@ -103,6 +121,24 @@
             {% endfor %}
         </tbody>
     </table>
+    <div class="pagination">
+            <span class="prev">
+                {% if matches_page_obj.has_previous %}
+                    <a href="?matches_page=1#match-section">◁</a>
+                    <a href="?matches_page={{ matches_page_obj.previous_page_number }}#match-section">◀</a>
+                {% endif %}
+            </span>
+            <span class="current">
+                Стр. {{ matches_page_obj.number }} из {{ matches_page_obj.paginator.num_pages }}
+            </span>
+            <span class="next">
+                {% if matches_page_obj.has_next %}
+                    <a href="?matches_page={{ matches_page_obj.next_page_number }}#match-section">▶</a>
+                    <a href="?matches_page={{ matches_page_obj.paginator.num_pages }}#match-section">▷</a>
+            {% endif %}
+            </span>
+        <span>
+    </div>
     {% else %}
     <p>Данные отсутсвуют.</p>
     {% endif %}
