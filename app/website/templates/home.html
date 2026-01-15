@@ -33,8 +33,8 @@
     <div class="pagination">
             <span class="prev">
                 {% if players_page_obj.has_previous %}
-                    <a href="?players_page=1#player-section">◁</a>
-                    <a href="?players_page={{ players_page_obj.previous_page_number }}#player-section">◀</a>
+                    <a href="?players_page=1#player-section">&lt&lt</a>
+                    <a href="?players_page={{ players_page_obj.previous_page_number }}#player-section">&lt</a>
                 {% endif %}
             </span>
             <span class="current">
@@ -42,8 +42,8 @@
             </span>
             <span class="next">
                 {% if players_page_obj.has_next %}
-                    <a href="?players_page={{ players_page_obj.next_page_number }}#player-section">▶</a>
-                    <a href="?players_page={{ players_page_obj.paginator.num_pages }}#player-section">▷</a>
+                    <a href="?players_page={{ players_page_obj.next_page_number }}#player-section">&gt</a>
+                    <a href="?players_page={{ players_page_obj.paginator.num_pages }}#player-section">&gt&gt</a>
             {% endif %}
             </span>
         <span>
@@ -124,8 +124,8 @@
     <div class="pagination">
             <span class="prev">
                 {% if matches_page_obj.has_previous %}
-                    <a href="?matches_page=1#match-section">◁</a>
-                    <a href="?matches_page={{ matches_page_obj.previous_page_number }}#match-section">◀</a>
+                    <a href="?matches_page=1#match-section">&lt&lt</a>
+                    <a href="?matches_page={{ matches_page_obj.previous_page_number }}#match-section">&lt</a>
                 {% endif %}
             </span>
             <span class="current">
@@ -133,8 +133,8 @@
             </span>
             <span class="next">
                 {% if matches_page_obj.has_next %}
-                    <a href="?matches_page={{ matches_page_obj.next_page_number }}#match-section">▶</a>
-                    <a href="?matches_page={{ matches_page_obj.paginator.num_pages }}#match-section">▷</a>
+                    <a href="?matches_page={{ matches_page_obj.next_page_number }}#match-section">&gt</a>
+                    <a href="?matches_page={{ matches_page_obj.paginator.num_pages }}#match-section">&gt&gt</a>
             {% endif %}
             </span>
         <span>

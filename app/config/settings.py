@@ -27,13 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get('DEBUG', False))
-
-ALLOWED_HOSTS = ['tabletennis.vleforn.com', 'www.tabletennis.vleforn.com']
-CSRF_TRUSTED_ORIGINS = ['https://tabletennis.vleforn.com', 'https://www.tabletennis.vleforn.com']
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+DEBUG = os.environ.get('DEBUG', "False") == "True"
 
 # Application definition
 
@@ -88,6 +82,11 @@ if DEBUG:
         }
     }
 else:
+    ALLOWED_HOSTS = ['tabletennis.vleforn.com', 'www.tabletennis.vleforn.com']
+    CSRF_TRUSTED_ORIGINS = ['https://tabletennis.vleforn.com', 'https://www.tabletennis.vleforn.com']
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
