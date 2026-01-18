@@ -9,9 +9,10 @@
     </a>
     <div class="right">
         <ul>
-            <li><a href="{% url 'home' %}#player-section">Рейтинг</a></li>
-            <li><a href="{% url 'home' %}#match-section">История матчей</a></li>
+            <li><a href="{% url 'home' %}#player-section" id="player-link">Рейтинг</a></li>
+            <li><a href="{% url 'home' %}#match-section" id="match-link">История матчей</a></li>
             {% if user.is_authenticated %}
+            <li><a href="{% url 'home' %}#control-panel-section" id="control-panel-link">Панель Управления</a></li>
             <li><a href="{% url 'control_center' %}">Настройки</a></li>
             {% endif %}
         </ul>
@@ -27,3 +28,57 @@
         <span></span>
     </a>
 </header>
+
+<div class="messages">
+{% if messages %}
+    {% for message in messages %}
+        <div class="message">
+            <p>{{ message }}</p>
+            <span></span>
+        </div>
+    {% endfor %}
+{% endif %}
+</div>
+
+<div class="overlay"></div>
+
+<div class="sidebar">
+    <ul>
+        <li><a href="{% url 'home' %}#player-section" id="player-link">Рейтинг</a></li>
+        <li><a href="{% url 'home' %}#match-section">История матчей</a></li>
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'home' %}#control-panel-section" id="control-panel-link">Панель Управления</a></li>
+        <li><a href="{% url 'control_center' %}">Настройки</a></li>
+        {% endif %}
+    </ul>
+    {% if user.is_authenticated %}
+    <a href="{% url 'logout_user' %}" class="cta-button">Выйти</a>
+    {% else %}
+    <a href="{% url 'login_page' %}" class="cta-button">Войти</a>
+    {% endif %}
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        if (window.location.pathname === '/') {
+            document.getElementById('player-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('player-section').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+            document.getElementById('match-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('match-section').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+            document.getElementById('control-panel-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('control-panel-section').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        }
+    });
+</script>
