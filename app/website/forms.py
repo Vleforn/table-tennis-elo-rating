@@ -11,18 +11,18 @@ class LoginForm(forms.ModelForm):
         fields = '__all__'
 
 class AddPlayerForm(forms.ModelForm):
-    first_name = forms.CharField(required=True, label="", widget=forms.TextInput(attrs={'class': 'add-player-input', 'placeholder': 'Имя'}))
-    last_name = forms.CharField(required=True, label="", widget=forms.TextInput(attrs={'class': 'add-player-input', 'placeholder': 'Фамилия'}))
+    first_name = forms.CharField(required=True, label="", widget=forms.TextInput(attrs={'class': 'add-player-input', 'placeholder': 'Имя', 'id': 'add-player-fname'}))
+    last_name = forms.CharField(required=True, label="", widget=forms.TextInput(attrs={'class': 'add-player-input', 'placeholder': 'Фамилия', 'id': 'add-player-lname'}))
 
     class Meta:
         model = Player
         fields = '__all__'
 
 class AddMatchForm(forms.ModelForm):
-    player_one = forms.ModelChoiceField(queryset=Player.objects.all(), empty_label='Игрок 1', widget=forms.Select(attrs={'class': 'match-player'}))
-    score_one = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'class': 'match-score', 'min': '0', 'value': '0'}))
-    player_two = forms.ModelChoiceField(queryset=Player.objects.all(), empty_label='Игрок 2', widget=forms.Select(attrs={'class': 'match-player'}))
-    score_two = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'class': 'match-score', 'min': '0', 'value': '0'}))
+    player_one = forms.ModelChoiceField(queryset=Player.objects.all(), empty_label='Игрок 1', widget=forms.Select(attrs={'class': 'match-player', 'id': 'player-one-input'}))
+    score_one = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'class': 'match-score', 'min': '0', 'value': '0', 'id': 'player-one-score-input'}))
+    player_two = forms.ModelChoiceField(queryset=Player.objects.all(), empty_label='Игрок 2', widget=forms.Select(attrs={'class': 'match-player', 'id': 'player-two-input'}))
+    score_two = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'class': 'match-score', 'min': '0', 'value': '0', 'id': 'player-two-score-input'}))
 
     class Meta:
         model = Match

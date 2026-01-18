@@ -12,22 +12,6 @@
 <body>
     {% include 'navbar.html' %}
 
-    <div class="overlay"></div>
-
-    <div class="sidebar">
-        <ul>
-            <li><a href="{% url 'home' %}#player-section">Рейтинг</a></li>
-            <li><a href="{% url 'home' %}#match-section">История матчей</a></li>
-            {% if user.is_authenticated %}
-            <li><a href="{% url 'control_center' %}">Настройки</a></li>
-            {% endif %}
-        </ul>
-        {% if user.is_authenticated %}
-        <a href="{% url 'logout_user' %}" class="cta-button">Выйти</a>
-        {% else %}
-        <a href="{% url 'login_page' %}" class="cta-button">Войти</a>
-        {% endif %}
-    </div>
 
     {% block content %}
     {% endblock %}
@@ -67,6 +51,18 @@
                     document.body.style.overflow = '';
                 }
             });
+
+            <!-- disappearing messages -->
+            const messages = document.querySelectorAll('.message')
+            for (let i = 0; i < messages.length; i++) {
+                let message = messages[i]
+                let statusBar = message.querySelector('span')
+                statusBar.classList.remove('closed')
+                requestAnimationFrame(() => {
+                    statusBar.classList.add('closed')
+                })
+                setTimeout(()=>{message.classList.toggle('closed');}, 5000)
+            }
         });
     </script>
 </body>

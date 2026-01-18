@@ -8,6 +8,7 @@ from django.contrib import messages
 from .elo_calc import update_rating
 from .queries import get_curr_rating
 from django.core.paginator import Paginator
+from django.contrib import messages
 
 def login_page(request):
     if request.method == 'POST':
@@ -16,17 +17,17 @@ def login_page(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            messages.success(request, 'You have been logged in!')
+            messages.success(request, 'Вход был выполнен.')
             return redirect('home')
         else:
-            messages.success(request, 'There was error with logging in. Please, try again...')
+            messages.success(request, 'Неправильное имя пользователя или пороль.')
             return redirect('login_page')
     else:
         return render(request, 'login_page.html', {})
 
 def logout_user(request):
     logout(request)
-    messages.success(request, 'You have logged out')
+    messages.success(request, 'Вы вышли из системы.')
     return redirect('home')
 
 def control_center(request):
@@ -42,7 +43,7 @@ def control_center(request):
             elo_parameter_form = EloParameterForm(instance=parameters)
             return render(request, 'control_center.html', {'elo_parameter_form': elo_parameter_form})
     else:
-        messages.success(request, 'You must be logged in to see that page')
+        messages.success(request, 'Вы не вошли в систему.')
         return redirect('home')
 
 
@@ -91,7 +92,7 @@ def add_player(request):
             rating_record = RatingRecords(player=player, rating=parameters.start_elo)
             rating_record.save()
 
-            messages.success(request, 'Новый игрок добавлен')
+            messages.success(request, 'Новый игрок был добавлен.')
         return redirect('home')
     else:
         add_player_form = AddPlayerForm()
@@ -119,7 +120,7 @@ def add_match(request):
             # update rating
             RatingRecords(player=match.player_one, rating=upd_rating_one, match=match).save()
             RatingRecords(player=match.player_two, rating=upd_rating_two, match=match).save()
-            messages.success(request, 'Новый матч добавлен')
+            messages.success(request, 'Новый матч был добавлен.')
         return redirect('home')
     else:
         add_match_form = AddMatchForm()

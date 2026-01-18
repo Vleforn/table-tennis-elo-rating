@@ -11,7 +11,7 @@ class Player(models.Model):
     #prev_rating
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.first_name}"
 
 class Match(models.Model):
     player_one = models.ForeignKey(Player, on_delete=models.PROTECT, related_name='as_player_one')

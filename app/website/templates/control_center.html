@@ -8,7 +8,7 @@
     <div class="control-panel">
         <div class="cp-left">
             {% if elo_parameter_form %}
-            <form method="POST" action="{% url 'control_center' %}">
+            <form method="POST" id="add-parameters" action="{% url 'control_center' %}">
                 {% csrf_token %}
                 <div class="base-settings">
                     <label for="id_start_elo">Стартовый Рейтинг:</label>
@@ -27,5 +27,17 @@
         </div>
     </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // change parameters of elo calculator
+        const parameterForm = document.getElementById('add-parameters')
+        parameterForm.addEventListener('submit', (e) => {
+            if (!window.confirm('Вы уверены что хотите изменить параметры?')) {
+                e.preventDefault();
+            }
+        })
+    });
+</script>
 
 {% endblock %}

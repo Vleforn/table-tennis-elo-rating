@@ -54,13 +54,13 @@
 </section>
 
 {% if user.is_authenticated %}
-<section>
+<section id="control-panel-section">
     <div class="text-container">
         <h2>Панель Управления</h2>
     </div>
     <div class="control-panel">
         <div class="cp-left">
-            <form method="POST" action="{% url 'add_player' %}">
+            <form method="POST" id="add-player" action="{% url 'add_player' %}">
                 <h3>Новый Игрок</h3>
                 {% csrf_token %}
                 {{ add_player_form.first_name }}
@@ -69,7 +69,7 @@
             </form>
         </div>
         <div class="cp-right">
-            <form method="POST" action="{% url 'add_match' %}">
+            <form method="POST" id="add-match" action="{% url 'add_match' %}">
                 <h3>Новый Матч</h3>
                 {% csrf_token %}
                 <div>
@@ -143,4 +143,47 @@
     <p>Данные отсутсвуют.</p>
     {% endif %}
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        function capitalizeFirstLetter(string) {
+            if (string.length === 0) {
+                return string;
+            }
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        // add match confirmation
+        const addMatchForm = document.getElementById('add-match')
+        addMatchForm.addEventListener('submit', (e) => {
+            let player1 = addMatchForm.querySelector('#player-one-input')
+            let score1 = addMatchForm.querySelector('#player-one-score-input').value
+            let player2 = addMatchForm.querySelector('#player-two-input')
+            let score2 = addMatchForm.querySelector('#player-two-score-input').value
+            let player1_name = player1.options[player1.selectedIndex].text
+            let player2_name = player2.options[player2.selectedIndex].text
+            if (score1 === "0" && score2 === "0") {
+                window.alert("Счет не может быть: 0:0!")
+                e.preventDefault();
+                return
+            }
+            if (!window.confirm(`Добавить матч: ${player1_name} ${score1}:${score2} ${player2_name}`)) {
+                e.preventDefault();
+            }
+        })
+        // add player confirmation
+        const addPlayerForm = document.getElementById('add-player')
+        addPlayerForm.addEventListener('submit', (e) => {
+            let firstName = addPlayerForm.querySelector('#add-player-fname').value
+            let lastName = addPlayerForm.querySelector('#add-player-lname').value
+            firstName = capitalizeFirstLetter(firstName)
+            lastName = capitalizeFirstLetter(lastName)
+            addPlayerForm.querySelector('#add-player-fname').value = firstName
+            addPlayerForm.querySelector('#add-player-lname').value = lastName
+            if (!window.confirm(`Добавить игрока "${firstName} ${lastName}"?`)) {
+                e.preventDefault();
+            }
+        })
+    });
+</script>
 {% endblock %}

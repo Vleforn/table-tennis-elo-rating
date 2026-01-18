@@ -3,16 +3,20 @@ from .models import RatingRecords, Match
 K_INDEX = 32
 START_ELO = 1000
 
-def update_rating(rating_A, score_A, rating_B, score_B):
+def update_rating(rating_A: float, score_A: int, rating_B: float, score_B: int) -> tuple[float, float]:
+    if rating_A < 0 or score_A < 0 or rating_B < 0 or score_B < 0:
+        raise ValueError("Function only accepts values")
+    if score_A == 0 and score_B == 0:
+        raise ValueError("Both scores can't be equal to zero")
     # Chess elo system
     K_factor = 32
     scale_factor = 400
     expected_score_A = 1 / (1 + 10 ** ((rating_B - rating_A) / scale_factor))
     expected_score_B = 1 - expected_score_A
-    print(f"expected_score_A = {expected_score_A}")
-    print(f"expected_score_B = {expected_score_B}")
+
     norm_score_A = score_A / (score_A + score_B)
     norm_score_B = 1 - score_A
+
     upd_rating_A = rating_A + K_factor * (norm_score_A - expected_score_A)
     upd_rating_B = rating_B + K_factor * (norm_score_B - expected_score_B)
     return upd_rating_A, upd_rating_B
