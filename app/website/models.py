@@ -1,6 +1,9 @@
 from django.db import models
-from .parameters import K_INDEX, SCALE_FACTOR, START_ELO
 from django.utils import timezone
+
+START_ELO = 1000
+K_INDEX = 32
+SCALE_FACTOR = 400
 
 # Create your models here.
 class Player(models.Model):
