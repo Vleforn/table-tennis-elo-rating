@@ -1,7 +1,6 @@
 from .models import RatingRecords, Match
+from .parameters import get_parameters
 
-K_INDEX = 32
-START_ELO = 1000
 
 def update_rating(rating_A: float, score_A: int, rating_B: float, score_B: int) -> tuple[float, float]:
     if rating_A < 0 or score_A < 0 or rating_B < 0 or score_B < 0:
@@ -9,16 +8,15 @@ def update_rating(rating_A: float, score_A: int, rating_B: float, score_B: int) 
     if score_A == 0 and score_B == 0:
         raise ValueError("Both scores can't be equal to zero")
     # Chess elo system
-    K_factor = 32
-    scale_factor = 400
-    expected_score_A = 1 / (1 + 10 ** ((rating_B - rating_A) / scale_factor))
+    parameters = get_parameters()
+    expected_score_A = 1 / (1 + 10 ** ((rating_B - rating_A) / parameters.scale_factor))
     expected_score_B = 1 - expected_score_A
 
     norm_score_A = score_A / (score_A + score_B)
     norm_score_B = 1 - score_A
 
-    upd_rating_A = rating_A + K_factor * (norm_score_A - expected_score_A)
-    upd_rating_B = rating_B + K_factor * (norm_score_B - expected_score_B)
+    upd_rating_A = rating_A + parameters.k_index * (norm_score_A - expected_score_A)
+    upd_rating_B = rating_B + parameters.k_index * (norm_score_B - expected_score_B)
     return upd_rating_A, upd_rating_B
 
 def sync_rating_history():
@@ -35,11 +33,12 @@ def recalculate_rating_history():
     RatingRecords.objects.all().delete()
     matches = Match.objects.order_by('created_at')
     players = {}
+    parameters = get_parameters()
     for match in matches:
         if match.player_one.id not in players:
-            players[match.player_one.id] = START_ELO
+            players[match.player_one.id] = parameters.start_elo
         if match.player_two.id not in players:
-            players[match.player_two.id] = START_ELO
+            players[match.player_two.id] = parameters.start_elo
 
         curr_rating_one = players[match.player_one.id]
         score_one = match.score_one

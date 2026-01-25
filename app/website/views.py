@@ -5,10 +5,12 @@ from django.db.models import Window, F
 from django.db.models.functions import Rank
 from .forms import AddPlayerForm, AddMatchForm, EloParameterForm
 from django.contrib import messages
-from .elo_calc import update_rating
+from .elo_calc import update_rating, recalculate_rating_history
 from .queries import get_curr_rating
 from django.core.paginator import Paginator
 from django.contrib import messages
+from django.urls import reverse
+from .parameters import get_parameters
 
 def login_page(request):
     if request.method == 'POST':
@@ -38,6 +40,7 @@ def control_center(request):
             if elo_parameter_form.is_valid():
                 elo_parameter_form.save()
                 # recalculate all ratings
+                recalculate_rating_history()
             return redirect('control_center')
         else:
             elo_parameter_form = EloParameterForm(instance=parameters)
@@ -82,18 +85,26 @@ def player(request):
 def add_player(request):
     if request.method == "POST":
         add_player_form = AddPlayerForm(request.POST)
+        url = reverse('home')
+
         if add_player_form.is_valid():
+
+            nickname = add_player_form.cleaned_data['nickname']
+            if Player.objects.filter(nickname=nickname).exists():
+                messages.warning(request, f'Игрок с никнеймом "{nickname}" уже существует!')
+                return redirect(f'{url}#control-panel-section')
 
             # add player into the db
             player = add_player_form.save()
 
             # add starting rating into the db
-            parameters = EloParameter.objects.first()
+            parameters = get_parameters()
             rating_record = RatingRecords(player=player, rating=parameters.start_elo)
+            print(rating_record)
             rating_record.save()
 
             messages.success(request, 'Новый игрок был добавлен.')
-        return redirect('home')
+            return redirect(f'{url}#control-panel-section')
     else:
         add_player_form = AddPlayerForm()
         return render(request, 'add_player.html', {'form': add_player_form})

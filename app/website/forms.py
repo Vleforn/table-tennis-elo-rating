@@ -11,8 +11,9 @@ class LoginForm(forms.ModelForm):
         fields = '__all__'
 
 class AddPlayerForm(forms.ModelForm):
-    first_name = forms.CharField(required=True, label="", widget=forms.TextInput(attrs={'class': 'add-player-input', 'placeholder': 'Имя', 'id': 'add-player-fname'}))
-    last_name = forms.CharField(required=True, label="", widget=forms.TextInput(attrs={'class': 'add-player-input', 'placeholder': 'Фамилия', 'id': 'add-player-lname'}))
+    nickname = forms.CharField(required=True, label="", widget=forms.TextInput(attrs={'class': 'add-player-input', 'placeholder': 'Никнейм*', 'id': 'add-player-nickname'}))
+    first_name = forms.CharField(required=False, label="", widget=forms.TextInput(attrs={'class': 'add-player-input', 'placeholder': 'Имя', 'id': 'add-player-fname'}))
+    last_name = forms.CharField(required=False, label="", widget=forms.TextInput(attrs={'class': 'add-player-input', 'placeholder': 'Фамилия', 'id': 'add-player-lname'}))
 
     class Meta:
         model = Player
@@ -31,6 +32,7 @@ class AddMatchForm(forms.ModelForm):
 class EloParameterForm(forms.ModelForm):
     k_index = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'class': 'form-control'}))
     start_elo = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    scale_factor = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = EloParameter
