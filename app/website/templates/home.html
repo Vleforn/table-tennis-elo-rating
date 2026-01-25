@@ -74,12 +74,16 @@
                 <h3>Новый Матч</h3>
                 {% csrf_token %}
                 <div>
-                {{ add_match_form.player_one }}
-                {{ add_match_form.score_one }}
+                    {{ add_match_form.player_one }}
+                    {{ add_match_form.score_one }}
+                    <button type="button" id="up-button-player-one">+</button>
+                    <button type="button" id="down-button-player-one">-</button>
                 </div>
                 <div>
-                {{ add_match_form.player_two }}
-                {{ add_match_form.score_two }}
+                    {{ add_match_form.player_two }}
+                    {{ add_match_form.score_two }}
+                    <button type="button" id="up-button-player-two">+</button>
+                    <button type="button" id="down-button-player-two">-</button>
                 </div>
                   <button type="submit" class="cta-button">Добавить</button>
             </form>
@@ -153,6 +157,30 @@
             }
             return string.charAt(0).toUpperCase() + string.slice(1);
         }
+        // increase score by one for player one
+        const upButtonPlayerOne = document.getElementById('up-button-player-one')
+        upButtonPlayerOne.addEventListener('click', (e) => {
+            addMatchForm.querySelector('#player-one-score-input').value++
+        })
+        // decrease score by one for player one
+        const downButtonPlayerOne = document.getElementById('down-button-player-one')
+        downButtonPlayerOne.addEventListener('click', (e) => {
+            if (Number(addMatchForm.querySelector('#player-one-score-input').value) > 0) {
+                addMatchForm.querySelector('#player-one-score-input').value--
+            }
+        })
+        // increase score by one for player two
+        const upButtonPlayerTwo = document.getElementById('up-button-player-two')
+        upButtonPlayerTwo.addEventListener('click', (e) => {
+            addMatchForm.querySelector('#player-two-score-input').value++
+        })
+        // decrease score by one for player two
+        const downButtonPlayerTwo = document.getElementById('down-button-player-two')
+        downButtonPlayerTwo.addEventListener('click', (e) => {
+            if (Number(addMatchForm.querySelector('#player-two-score-input').value) > 0) {
+                addMatchForm.querySelector('#player-two-score-input').value--
+            }
+        })
 
         // add match confirmation
         const addMatchForm = document.getElementById('add-match')

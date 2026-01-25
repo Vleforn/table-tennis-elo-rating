@@ -1,4 +1,6 @@
 from django.db import models
+from .parameters import K_INDEX, SCALE_FACTOR, START_ELO
+from django.utils import timezone
 
 # Create your models here.
 class Player(models.Model):
@@ -32,7 +34,7 @@ class RatingRecords(models.Model):
     #created_at
 
 class EloParameter(models.Model):
-    k_index = models.IntegerField(null=False)
-    start_elo = models.IntegerField(null=False)
-    scale_factor = models.IntegerField(null=False)
-    created_at = models.DateTimeField(auto_now_add=True)
+    k_index = models.IntegerField(null=False, default=K_INDEX)
+    start_elo = models.IntegerField(null=False, default=START_ELO)
+    scale_factor = models.IntegerField(null=False, default=SCALE_FACTOR)
+    created_at = models.DateTimeField(auto_now_add=True, default=timezone.now)
