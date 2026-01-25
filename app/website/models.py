@@ -2,7 +2,8 @@ from django.db import models
 
 # Create your models here.
 class Player(models.Model):
-    first_name = models.CharField(max_length=50)
+    nickname = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=50, null=True)
     last_name = models.CharField(max_length=50, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     #total_games
@@ -11,7 +12,7 @@ class Player(models.Model):
     #prev_rating
 
     def __str__(self):
-        return f"{self.first_name}"
+        return f"{self.nickname}"
 
 class Match(models.Model):
     player_one = models.ForeignKey(Player, on_delete=models.PROTECT, related_name='as_player_one')
@@ -33,4 +34,5 @@ class RatingRecords(models.Model):
 class EloParameter(models.Model):
     k_index = models.IntegerField(null=False)
     start_elo = models.IntegerField(null=False)
-
+    scale_factor = models.IntegerField(null=False)
+    created_at = models.DateTimeField(auto_now_add=True)

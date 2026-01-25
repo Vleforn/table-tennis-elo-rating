@@ -24,7 +24,7 @@
             {% for player in players_page_obj %}
             <tr>
                 <td class="t-rank">{{ player.rank }}</td>
-                <td class="t-player">{{ player.first_name }} {{ player.last_name }}</td>
+                <td class="t-player">{% if player.last_name and player.first_name %} {{player.first_name}} {{ player.last_name }} {% else %} {{ player.nickname }} {% endif %}</td>
                 <td class="t-rating">{{ player.curr_rating|floatformat:0 }}</td>
             </tr>
             {% endfor %}
@@ -63,6 +63,7 @@
             <form method="POST" id="add-player" action="{% url 'add_player' %}">
                 <h3>Новый Игрок</h3>
                 {% csrf_token %}
+                {{ add_player_form.nickname }}
                 {{ add_player_form.first_name }}
                 {{ add_player_form.last_name }}
                 <button type="submit" class="cta-button">Добавить</button>
@@ -114,9 +115,9 @@
             {% for match in matches_page_obj %}
             <tr>
                 <td class="t-date">{{ match.created_at|date:"d.m.Y"}}</td>
-                <td class="t-player1">{{ match.player_one.first_name}}</td>
+                <td class="t-player1">{{ match.player_one.nickname}}</td>
                 <td class="t-result">{{ match.score_one }}:{{ match.score_two }}</td>
-                <td class="t-player2">{{ match.player_two.first_name}}</td>
+                <td class="t-player2">{{ match.player_two.nickname}}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -174,13 +175,16 @@
         // add player confirmation
         const addPlayerForm = document.getElementById('add-player')
         addPlayerForm.addEventListener('submit', (e) => {
+            let nickName = addPlayerForm.querySelector('#add-player-nickname').value
             let firstName = addPlayerForm.querySelector('#add-player-fname').value
             let lastName = addPlayerForm.querySelector('#add-player-lname').value
+            nickName = capitalizeFirstLetter(nickName)
             firstName = capitalizeFirstLetter(firstName)
             lastName = capitalizeFirstLetter(lastName)
+            addPlayerForm.querySelector('#add-player-nickname').value = nickName
             addPlayerForm.querySelector('#add-player-fname').value = firstName
             addPlayerForm.querySelector('#add-player-lname').value = lastName
-            if (!window.confirm(`Добавить игрока "${firstName} ${lastName}"?`)) {
+            if (!window.confirm(`Добавить игрока? "${nickName}" ${firstName} ${lastName}`)) {
                 e.preventDefault();
             }
         })
